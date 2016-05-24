@@ -1,29 +1,25 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EloBuddy;
 using EloBuddy.SDK;
-using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Events;
-using EloBuddy.SDK.Rendering;
-using EloBuddy.SDK.Utils;
-using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
-
+using EloBuddy.SDK.Menu;
 using SharpDX;
 using Color = System.Drawing.Color;
-
-namespace GodSpeedRengar
+    
+namespace Rengar_WP
 {
-    public static class Combo
+    public static class combo 
     {
         public static void Initialize()
         {
-            Game.OnTick += Game_OnTick;
-            Orbwalker.OnPostAttack += Orbwalker_OnPostAttack;
-            Orbwalker.OnAttack += Orbwalker_OnAttack;
+            Game.OnTick += Game_OnTick
+    Orbwalker.OnPostAttack += Orbwalker_OnPostAttack;
+            Orbwalker.OnPostAttack += Orbwalker_OnAttack;
             Orbwalker.OnPreAttack += Orbwalker_OnPreAttack;
             Dash.OnDash += Dash_OnDash;
         }
@@ -49,7 +45,7 @@ namespace GodSpeedRengar
             if (!Player.Instance.HasBuff("rengarpassivebuff") && Variables.Q.IsReady() &&
                 !(Variables.ComboMode.CurrentValue == 1 && Player.Instance.Mana == 5))
             {
-                var enemy = target as Obj_AI_Base; 
+                var enemy = target as Obj_AI_Base;
                 var x = Prediction.Position.PredictUnitPosition(enemy, (int)(Player.Instance.AttackCastDelay * 1000));
                 var distance = (Player.Instance.Position.To2D().Distance(x)
                                 - Player.Instance.BoundingRadius - enemy.BoundingRadius - Player.Instance.AttackRange);
@@ -73,7 +69,9 @@ namespace GodSpeedRengar
                 return;
             if (!Checker.HasItem() || Item.CanUseItem(3748))
                 return;
-            if (e.Duration - 100 - Game.Ping / 2 > 0)
+            if (!Checker.HasItem() || Item.CanUseItem(3040))
+                return;
+                if (e.Duration - 100 - Game.Ping / 2 > 0)
             {
                 Core.DelayAction(() => Checker.CastItem(),
                                 (int)(e.Duration - 100 - Game.Ping / 2));
@@ -137,7 +135,7 @@ namespace GodSpeedRengar
                 if (Checker.HasSmiteBlue || Checker.HasSmiteRed)
                 {
                     var target = TargetSelector.GetTarget(650, DamageType.Physical);
-                    if (target.IsValidCheck() && Player.Instance.Distance(target.Position) 
+                    if (target.IsValidCheck() && Player.Instance.Distance(target.Position)
                         <= Player.Instance.BoundingRadius + 500 + target.BoundingRadius)
                     {
                         Player.Instance.Spellbook.CastSpell(Variables.Smite, target);
@@ -177,7 +175,7 @@ namespace GodSpeedRengar
                                 }
                             }
                         }
-                        if (Variables.Q.IsReady() && Player.Instance.CountEnemiesInRange(Player.Instance.AttackRange 
+                        if (Variables.Q.IsReady() && Player.Instance.CountEnemiesInRange(Player.Instance.AttackRange
                             + Player.Instance.BoundingRadius + 100) != 0)
                         {
                             if (Checker.CanMove() && !Checker.CanAttack())
@@ -240,7 +238,7 @@ namespace GodSpeedRengar
                             }
                         }
                     }
-             
+
                     else
                     {
                         if (Variables.Q.IsReady() && Player.Instance.CountEnemiesInRange(Player.Instance.AttackRange
@@ -257,7 +255,7 @@ namespace GodSpeedRengar
                         }
                         if (Variables.E.IsReady())
                         {
-                            if (Player.Instance.CountEnemiesInRange(Player.Instance.AttackRange + Player.Instance.BoundingRadius + 100) 
+                            if (Player.Instance.CountEnemiesInRange(Player.Instance.AttackRange + Player.Instance.BoundingRadius + 100)
                                 == 0 && !Player.HasBuff("rengarpassivebuff") && !Player.Instance.IsDashing()
                                 && Orbwalker.CanMove)
                             {
